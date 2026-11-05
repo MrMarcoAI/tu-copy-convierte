@@ -305,7 +305,6 @@
       case 'close-lightbox': closeDialog(el.closest('dialog')); break;
       case 'open-info': openDialog(infoBox, el); break;
       case 'start-from-info': closeDialog(infoBox, function () { goTo(1); }); break;
-      case 'copy-email': copyEmail(); break;
     }
   });
 
@@ -395,7 +394,6 @@
   // ---------- Lightbox TCC? ----------
   var email = CONFIG.CONTACT_EMAIL || '';
   var mailLink = $('#mail-link');
-  mailLink.textContent = email;
   mailLink.href = 'mailto:' + email;
 
   // Dos lightbox: "TCC?" (quién está detrás) y "¿Qué obtienes?"
@@ -422,7 +420,6 @@
     dlg.addEventListener('close', function () {
       dlg.classList.remove('is-closing');
       document.body.classList.remove('is-locked');
-      $('#copied').textContent = '';
       var after = dlg._after; dlg._after = null;
       if (after) after();
       else if (dlg._opener) dlg._opener.focus();
@@ -442,26 +439,6 @@
   });
 
   badge.addEventListener('click', function () { openDialog(lightbox, badge); });
-
-  function copyEmail() {
-    var out = $('#copied');
-    var done = function () { out.textContent = 'Copiado'; };
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(email).then(done, fallback);
-    } else fallback();
-
-    function fallback() {
-      var ta = document.createElement('textarea');
-      ta.value = email;
-      ta.setAttribute('readonly', '');
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      lightbox.appendChild(ta);
-      ta.select();
-      try { document.execCommand('copy'); done(); } catch (e) { /* sin soporte */ }
-      lightbox.removeChild(ta);
-    }
-  }
 
   // ---------- Mobile: que el teclado no tape el botón ----------
   if (window.visualViewport) {

@@ -235,6 +235,21 @@ body.is-locked { overflow: hidden; }
 .screen--welcome { padding-top: clamp(16px, 4vh, 56px); padding-bottom: 48px; min-height: 0; }
 .hero { margin-bottom: 2rem; rotate: -2deg; transform-origin: left center; } /* solo el home va inclinado */
 .hero .lead { margin-bottom: 0; }
+/* GRATIS destacado: Anton en un cuadro de color */
+.gratis {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.25em;
+  line-height: 1;
+  letter-spacing: .03em;
+  color: var(--morado-noche);
+  background: var(--acento);
+  padding: .14em .35em .1em;
+  border-radius: 8px;
+  rotate: -3deg;
+  margin: 0 .1em;
+}
 .hero .actions { margin-top: 1.5rem; }
 .receive {
   margin: 0 0 1.25rem;
@@ -480,15 +495,8 @@ body.is-locked { overflow: hidden; }
 .lightbox .actions { margin-top: 1.25rem; }
 .lightbox .display--lb { padding-right: 56px; }
 .lightbox__story p { margin: 0 0 .85rem; font-size: 16px; }
-.lightbox__contact {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: .75rem 1rem;
-  margin: 1.25rem 0 1rem;
-}
-.mail-link { color: var(--blanco); font-weight: 600; text-decoration-color: var(--azul-clic); text-underline-offset: 3px; word-break: break-all; }
-.copied { font-size: 16px; font-weight: 600; color: var(--acento); }
+.mail-link { color: var(--acento); font-weight: 700; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.mail-link:hover { color: var(--blanco); }
 
 /* Mobile: hoja a pantalla completa */
 @media (max-width: 640px) {
