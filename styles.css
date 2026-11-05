@@ -167,7 +167,7 @@ body.is-locked { overflow: hidden; }
   container-type: inline-size;
 }
 .screen[hidden] { display: none; }
-#form { position: relative; overflow-x: clip; }
+#form { position: relative; overflow: clip; }
 .screen.is-leaving { position: absolute; top: 0; left: 0; right: 0; pointer-events: none; }
 
 /* Bienvenida <-> P1: deslizamiento horizontal */
@@ -179,6 +179,10 @@ body.is-locked { overflow: hidden; }
 @keyframes from-left  { from { transform: translateX(-100%); } to { transform: none; } }
 @keyframes to-left    { to { transform: translateX(-100%); } }
 @keyframes to-right   { to { transform: translateX(100%); } }
+@keyframes from-bottom { from { transform: translateY(100vh); } to { transform: none; } }
+@keyframes from-top    { from { transform: translateY(-100vh); } to { transform: none; } }
+@keyframes to-top      { to { transform: translateY(-100vh); } }
+@keyframes to-bottom   { to { transform: translateY(100vh); } }
 
 /* Entre preguntas: la anterior se desvanece, la nueva entra en cascada */
 .screen.anim-out-up   { animation: fade-up .45s var(--ease-in) both; }
@@ -237,8 +241,18 @@ body.is-locked { overflow: hidden; }
 .secondary strong { font-weight: 700; }
 
 /* Bienvenida: título, bajada y botón en el primer pantallazo; detalle debajo */
-.screen--welcome { padding-top: clamp(16px, 4vh, 56px); padding-bottom: 48px; min-height: 0; }
-.hero { margin-bottom: 2rem; rotate: -2deg; transform-origin: left center; } /* solo el home va inclinado */
+.screen--welcome {
+  /* home centrado en la pantalla completa (el padding inferior compensa la barra de arriba) */
+  --topbar-h: 138px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100dvh - var(--topbar-h));
+  padding-top: 16px;
+  padding-bottom: calc(var(--topbar-h) * .75);
+}
+.screen--welcome[hidden] { display: none; }
+.hero { margin-bottom: 0; rotate: -2deg; transform-origin: left center; } /* solo el home va inclinado */
 .hero .lead { margin-bottom: 0; }
 /* GRATIS destacado: Anton en un cuadro de color */
 .gratis {
@@ -519,6 +533,12 @@ body.is-locked { overflow: hidden; }
   .lightbox__inner { padding: 64px 16px max(32px, env(safe-area-inset-bottom)); }
   .lightbox__close { top: 12px; right: 12px; }
   .topbar { padding-top: max(24px, env(safe-area-inset-top)); padding-right: 24px; }
+  .screen--welcome { --topbar-h: 104px; }
+  /* Mobile: bienvenida <-> P1 se desplaza hacia abajo en vez de hacia el lado */
+  .screen.anim-in-right  { animation-name: from-bottom; }
+  .screen.anim-out-left  { animation-name: to-top; }
+  .screen.anim-in-left   { animation-name: from-top; }
+  .screen.anim-out-right { animation-name: to-bottom; }
   .badge { width: 66px; height: 66px; border-width: 4px; font-size: 18px; }
   .hint--enter { display: none; } /* en mobile no se depende de Enter */
 }
