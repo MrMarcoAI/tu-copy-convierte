@@ -474,7 +474,5 @@
   }
 
   // ---------- Inicio ----------
-  if (!reduceMotion) badge.classList.add('is-intro');
-  badge.addEventListener('animationend', function () { badge.classList.remove('is-intro'); });
   updateProgress();
 })();

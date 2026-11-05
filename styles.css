@@ -112,8 +112,16 @@ body.is-locked { overflow: hidden; }
   line-height: 1;
   letter-spacing: 0.02em;
 }
-.badge__text { transform: translateY(1px); }
-.badge:hover { background: var(--acento); color: var(--morado-noche); transform: rotate(-12deg) scale(1.1); }
+.badge__text {
+  display: block;
+  transform: translateY(1px);
+  /* gira constantemente; se detiene al pasar el mouse o con foco */
+  animation: badge-spin 9s linear infinite;
+}
+.badge:hover .badge__text,
+.badge:focus-visible .badge__text { animation-play-state: paused; }
+@keyframes badge-spin { to { rotate: 360deg; } }
+.badge:hover { background: var(--acento); color: var(--morado-noche); transform: scale(1.1); }
 .badge:active { transform: scale(.96); }
 .badge:focus-visible { outline-offset: 5px; }
 /* Tooltip */
@@ -142,13 +150,6 @@ body.is-locked { overflow: hidden; }
 .badge { overflow: visible; }
 
 /* Un solo giro sutil al cargar la bienvenida */
-.badge.is-intro { animation: badge-intro 1.4s var(--ease) .9s 1 both; }
-@keyframes badge-intro {
-  0% { transform: rotate(0) scale(1); }
-  30% { transform: rotate(-16deg) scale(1.12); }
-  60% { transform: rotate(8deg) scale(1.02); }
-  100% { transform: rotate(0) scale(1); }
-}
 
 /* ---------- Pantallas ---------- */
 #form { margin: 0; }
@@ -205,8 +206,6 @@ body.is-locked { overflow: hidden; }
 /* tamaño relativo al ancho de su columna: "¿CONVIERTE?" nunca se corta */
 .display--xl {
   font-size: clamp(44px, min(16cqi, 19vh), 190px);
-  rotate: -5deg;               /* inclinado, independiente de las animaciones (transform) */
-  transform-origin: left bottom;
   margin-top: .35em;
   margin-bottom: 1.6rem;
 }
@@ -234,7 +233,7 @@ body.is-locked { overflow: hidden; }
 
 /* Bienvenida: título, bajada y botón en el primer pantallazo; detalle debajo */
 .screen--welcome { padding-top: clamp(16px, 4vh, 56px); padding-bottom: 48px; min-height: 0; }
-.hero { margin-bottom: 2rem; }
+.hero { margin-bottom: 2rem; rotate: -2deg; transform-origin: left center; } /* solo el home va inclinado */
 .hero .lead { margin-bottom: 0; }
 .hero .actions { margin-top: 1.5rem; }
 .receive {
