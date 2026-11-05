@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Comparar tipografías · Tu copy, ¿convierte?</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Big+Shoulders+Display:wght@900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#472D5B; --malva:#B474B1; --lila:#B59BB3; --azul:#63A7CF; --blanco:#F9F9F9; --acento:#F2D94E; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--blanco); font-family:Inter, system-ui, sans-serif; font-size:16px; line-height:1.5; }
+    header { padding:24px 16px; max-width:1400px; margin:0 auto; }
+    header h1 { font-size:20px; margin:0 0 .25rem; }
+    header p { margin:0; color:var(--lila); }
+    main { display:grid; gap:16px; padding:0 16px 48px; max-width:1400px; margin:0 auto; }
+    @media (min-width: 1100px) { main { grid-template-columns: repeat(3, 1fr); } }
+    .card { border:2px solid rgba(181,155,179,.35); border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:1rem; min-width:0; container-type:inline-size; }
+    .meta { display:flex; justify-content:space-between; align-items:baseline; gap:.5rem; flex-wrap:wrap; }
+    .meta h2 { margin:0; font-size:16px; font-weight:700; }
+    .meta span { color:var(--lila); font-size:14px; }
+    .d { margin:0; text-transform:uppercase; line-height:.95; }
+    .xl { font-size: var(--xl); }
+    .q  { font-size: var(--q); }
+    .sm { font-size: var(--sm); }
+    .w { color:var(--blanco); } .m { color:var(--malva); } .l { color:var(--lila); }
+    .badge { align-self:flex-start; display:grid; place-items:center; width:72px; height:64px; background:#A969A6; color:var(--blanco); clip-path:polygon(0 0,100% 0,100% 72%,76% 100%,0 100%); border-radius:6px 6px 0 6px; transform:rotate(-6deg); font-size:var(--badge); line-height:1; }
+    .row { display:flex; justify-content:space-between; align-items:center; gap:1rem; }
+    a.btn { display:inline-block; font-weight:700; color:var(--bg); background:var(--acento); text-decoration:none; padding:.75rem 1.25rem; border-radius:8px; align-self:flex-start; }
+    a:focus-visible { outline:3px solid var(--azul); outline-offset:3px; }
+    hr { border:0; border-top:1px solid rgba(181,155,179,.25); width:100%; margin:0; }
+    .anton { font-family:'Anton', sans-serif; font-weight:400; --xl:19cqi; --q:clamp(34px,3.6vw,52px); --sm:22px; --badge:26px; }
+    .bigs  { font-family:'Big Shoulders Display', sans-serif; font-weight:900; --xl:19cqi; --q:clamp(37px,3.9vw,56px); --sm:24px; --badge:28px; }
+    .bebas { font-family:'Bebas Neue', sans-serif; font-weight:400; --xl:23cqi; --q:clamp(38px,4vw,58px); --sm:25px; --badge:29px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Tipografía display: elige una</h1>
+    <p>Mismo copy, misma paleta, interlineado 0,95. Cada botón abre el formulario completo con esa fuente (<code>?fuente=…</code>). Cuando elijas, se fija en <code>styles.css</code> (<code>--font-display</code>) y se quitan las otras dos del link de Google Fonts.</p>
+  </header>
+  <main>
+    <section class="card">
+      <div class="meta"><h2>Anton</h2><span>400 (único peso)</span></div>
+      <div class="row anton"><p class="d sm"><span class="w">TU COPY,</span> <span class="l">¿CONVIERTE?</span></p><div class="badge">TCC?</div></div>
+      <p class="d xl anton"><span class="w">TU COPY,</span><br><span class="m">¿CONVIERTE?</span></p>
+      <hr>
+      <p class="d q anton"><span class="w">¿QUÉ PÁGINA QUIERES</span> <span class="m">QUE REVISE?</span></p>
+      <p class="d q anton"><span class="w">LISTO,</span> <span class="m">YA LO TENGO.</span></p>
+      <a class="btn" href="index.html?fuente=anton">Ver formulario con Anton</a>
+    </section>
+
+    <section class="card">
+      <div class="meta"><h2>Big Shoulders Display</h2><span>Black 900</span></div>
+      <div class="row bigs"><p class="d sm"><span class="w">TU COPY,</span> <span class="l">¿CONVIERTE?</span></p><div class="badge">TCC?</div></div>
+      <p class="d xl bigs"><span class="w">TU COPY,</span><br><span class="m">¿CONVIERTE?</span></p>
+      <hr>
+      <p class="d q bigs"><span class="w">¿QUÉ PÁGINA QUIERES</span> <span class="m">QUE REVISE?</span></p>
+      <p class="d q bigs"><span class="w">LISTO,</span> <span class="m">YA LO TENGO.</span></p>
+      <a class="btn" href="index.html?fuente=big-shoulders">Ver formulario con Big Shoulders</a>
+    </section>
+
+    <section class="card">
+      <div class="meta"><h2>Bebas Neue</h2><span>400 (único peso)</span></div>
+      <div class="row bebas"><p class="d sm"><span class="w">TU COPY,</span> <span class="l">¿CONVIERTE?</span></p><div class="badge">TCC?</div></div>
+      <p class="d xl bebas"><span class="w">TU COPY,</span><br><span class="m">¿CONVIERTE?</span></p>
+      <hr>
+      <p class="d q bebas"><span class="w">¿QUÉ PÁGINA QUIERES</span> <span class="m">QUE REVISE?</span></p>
+      <p class="d q bebas"><span class="w">LISTO,</span> <span class="m">YA LO TENGO.</span></p>
+      <a class="btn" href="index.html?fuente=bebas">Ver formulario con Bebas Neue</a>
+    </section>
+  </main>
+</body>
+</html>

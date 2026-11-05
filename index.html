@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tu copy, ¿convierte?</title>
+  <meta name="description" content="Déjame tu página y el anuncio que lleva a ella. En 48 horas hábiles te digo qué está funcionando, qué te está costando clientes y por dónde partir.">
+  <meta name="theme-color" content="#472D5B">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- PENDIENTE: cuando Marco elija la tipografía display, dejar solo esa familia en este link -->
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Big+Shoulders+Display:wght@900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <p class="brand" aria-label="Tu copy, ¿convierte?">
+      <span class="c-white">TU COPY,</span> <span class="c-lila">¿CONVIERTE?</span>
+    </p>
+    <!-- PENDIENTE: decidir con Marco "TCC?" o "¿TCC?" (también en favicon.svg) -->
+    <button type="button" class="badge" id="badge" aria-label="Quién está detrás de Tu copy, ¿convierte?" data-tooltip="¿Quién está detrás?" aria-haspopup="dialog">
+      <span class="badge__text" aria-hidden="true">TCC?</span>
+      <svg class="badge__cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2 L4 19 L8.6 14.6 L11.6 21.4 L14.6 20.1 L11.7 13.4 L18 13.4 Z"/></svg>
+    </button>
+  </header>
+
+  <form id="form" novalidate autocomplete="on">
+    <!-- Honeypot antispam: humanos no lo ven ni lo completan -->
+    <div class="hp" aria-hidden="true">
+      <label for="website">No completar este campo</label>
+      <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+    </div>
+
+    <!-- ============ PANTALLA 0: BIENVENIDA ============ -->
+    <section class="screen screen--welcome is-active" data-step="0" aria-labelledby="welcome-title">
+      <div class="welcome">
+        <div class="welcome__main">
+          <h1 class="display display--xl" id="welcome-title">
+            <span class="c-white">TU COPY,</span><br>
+            <span class="c-malva">¿CONVIERTE?</span>
+          </h1>
+
+          <p class="lead">Déjame tu página y el anuncio que lleva a ella. En 48 horas hábiles te digo qué está funcionando, qué te está costando clientes y por dónde partir.</p>
+
+          <div class="receive">
+            <p class="receive__title">Qué recibes (gratis):</p>
+            <ul class="receive__list">
+              <li>Las 3 fortalezas de tu página</li>
+              <li>Los 3 problemas que más te están frenando, ordenados por impacto</li>
+              <li>Si tu página cumple lo que promete tu anuncio</li>
+              <li>Un ejemplo de reescritura</li>
+            </ul>
+          </div>
+
+          <p class="secondary"><strong>Qué no incluye:</strong> la reescritura completa. El diagnóstico te muestra el problema; resolverlo es otra conversación.</p>
+
+          <p class="secondary signature">Uso IA para el primer análisis, pero no juega sola este partido: cada diagnóstico pasa por mi criterio y lo firmo yo. Marco Tricot, redactor senior con 20 años en copy, storytelling y performance.</p>
+
+          <p class="secondary quota">Reviso <span class="pendiente">[PENDIENTE: X]</span> diagnósticos por semana.</p>
+
+          <div class="actions">
+            <button type="button" class="btn btn--primary" data-action="start">Empezar</button>
+            <span class="hint hint--enter">presiona Enter ↵</span>
+          </div>
+        </div>
+
+        <!-- PENDIENTE: foto de Marco (reemplazar este bloque por <img src="..." alt="Marco Tricot">) -->
+        <div class="photo photo--welcome pendiente-box" role="img" aria-label="Foto de Marco Tricot (pendiente)">
+          <span class="pendiente">[PENDIENTE: foto de Marco]</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PREGUNTA 1 · URL ============ -->
+    <section class="screen" data-step="1" aria-labelledby="q1-title" hidden>
+      <h2 class="display display--q" id="q1-title"><span class="c-white">¿QUÉ PÁGINA QUIERES</span> <span class="c-malva">QUE REVISE?</span></h2>
+      <p class="help" id="q1-help">La página donde llega la gente desde tus anuncios. Si no tienes una específica, tu home.</p>
+      <div class="field">
+        <label class="sr-only" for="url_pagina">¿Qué página quieres que revise?</label>
+        <input class="input" type="url" inputmode="url" id="url_pagina" name="url_pagina" placeholder="https://tuempresa.cl/landing" autocomplete="url" aria-describedby="q1-help q1-error" autocapitalize="off" spellcheck="false">
+        <p class="error" id="q1-error" aria-live="polite"></p>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn btn--primary" data-action="next">OK</button>
+        <span class="hint hint--enter">presiona Enter ↵</span>
+      </div>
+    </section>
+
+    <!-- ============ PREGUNTA 2 · ANUNCIO ============ -->
+    <section class="screen" data-step="2" aria-labelledby="q2-title" hidden>
+      <h2 class="display display--q" id="q2-title"><span class="c-white">¿QUÉ ANUNCIO LLEVA</span> <span class="c-malva">GENTE A ESA PÁGINA?</span></h2>
+      <p class="help" id="q2-help">Pega el link del anuncio (por ejemplo, desde la biblioteca de anuncios de Meta) o cuéntame en pocas palabras qué dice. Así reviso si la página cumple lo que promete el anuncio.</p>
+      <div class="field">
+        <label class="label" for="anuncio_link">Link del anuncio (opcional)</label>
+        <input class="input" type="url" inputmode="url" id="anuncio_link" name="anuncio_link" aria-describedby="q2-help q2-error" autocapitalize="off" spellcheck="false">
+      </div>
+      <div class="field">
+        <label class="label" for="anuncio_texto">Qué dice el anuncio (opcional)</label>
+        <textarea class="input input--area" id="anuncio_texto" name="anuncio_texto" rows="3" aria-describedby="q2-help q2-error"></textarea>
+        <p class="error" id="q2-error" aria-live="polite"></p>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn btn--primary" data-action="next">OK</button>
+        <span class="hint hint--enter">presiona Enter ↵ · Shift + Enter para salto de línea</span>
+      </div>
+    </section>
+
+    <!-- ============ PREGUNTA 3 · OBJETIVO ============ -->
+    <section class="screen" data-step="3" aria-labelledby="q3-title" hidden>
+      <h2 class="display display--q" id="q3-title"><span class="c-white">¿QUÉ QUIERES QUE HAGA</span> <span class="c-malva">LA GENTE</span> <span class="c-white">EN ESA PÁGINA?</span></h2>
+      <div class="options" role="radiogroup" aria-labelledby="q3-title" aria-describedby="q3-error" data-name="objetivo">
+        <button type="button" class="option" role="radio" aria-checked="false" data-key="A" data-value="Dejar sus datos"><span class="option__key" aria-hidden="true">A</span>Dejar sus datos</button>
+        <button type="button" class="option" role="radio" aria-checked="false" data-key="B" data-value="Comprar"><span class="option__key" aria-hidden="true">B</span>Comprar</button>
+        <button type="button" class="option" role="radio" aria-checked="false" data-key="C" data-value="Agendar o reservar"><span class="option__key" aria-hidden="true">C</span>Agendar o reservar</button>
+        <button type="button" class="option" role="radio" aria-checked="false" data-key="D" data-value="Otro" data-other="true"><span class="option__key" aria-hidden="true">D</span>Otro</button>
+      </div>
+      <div class="field field--other" hidden>
+        <!-- PENDIENTE: copy no definido en el brief (label del campo "Otro") -->
+        <label class="sr-only" for="objetivo_otro">Otro: ¿qué quieres que haga la gente?</label>
+        <input class="input" type="text" id="objetivo_otro" name="objetivo_otro" maxlength="140" aria-describedby="q3-error">
+      </div>
+      <p class="error" id="q3-error" aria-live="polite"></p>
+      <div class="actions">
+        <button type="button" class="btn btn--primary" data-action="next">OK</button>
+        <span class="hint hint--enter">presiona A, B, C o D</span>
+      </div>
+    </section>
+
+    <!-- ============ PREGUNTA 4 · PÚBLICO ============ -->
+    <section class="screen" data-step="4" aria-labelledby="q4-title" hidden>
+      <h2 class="display display--q" id="q4-title"><span class="c-white">¿A QUIÉN LE HABLA</span> <span class="c-malva">TU PÁGINA?</span></h2>
+      <div class="field">
+        <label class="sr-only" for="publico">¿A quién le habla tu página?</label>
+        <input class="input" type="text" id="publico" name="publico" maxlength="140" placeholder="Ej.: dueñas de clínicas veterinarias en regiones" aria-describedby="q4-count q4-error">
+        <p class="counter" id="q4-count" aria-live="off"><span data-count>0</span>/140</p>
+        <p class="error" id="q4-error" aria-live="polite"></p>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn btn--primary" data-action="next">OK</button>
+        <span class="hint hint--enter">presiona Enter ↵</span>
+      </div>
+    </section>
+
+    <!-- ============ PREGUNTA 5 · INVERSIÓN (filtro) ============ -->
+    <section class="screen" data-step="5" aria-labelledby="q5-title" hidden>
+      <h2 class="display display--q" id="q5-title"><span class="c-white">¿HOY INVIERTES EN</span> <span class="c-malva">PUBLICIDAD DIGITAL?</span></h2>
+      <div class="options" role="radiogroup" aria-labelledby="q5-title" aria-describedby="q5-error" data-name="inversion_pauta">
+        <button type="button" class="option" role="radio" aria-checked="false" data-key="A" data-value="Sí, en Meta"><span class="option__key" aria-hidden="true">A</span>Sí, en Meta</button>
+        <button type="button" class="option" role="radio" aria-checked="false" data-key="B" data-value="Sí, en Google"><span class="option__key" aria-hidden="true">B</span>Sí, en Google</button>
+        <button type="button" class="option" role="radio" aria-checked="false" data-key="C" data-value="En ambas"><span class="option__key" aria-hidden="true">C</span>En ambas</button>
+        <button type="button" class="option" role="radio" aria-checked="false" data-key="D" data-value="Todavía no"><span class="option__key" aria-hidden="true">D</span>Todavía no</button>
+      </div>
+      <p class="error" id="q5-error" aria-live="polite"></p>
+      <div class="actions">
+        <button type="button" class="btn btn--primary" data-action="next">OK</button>
+        <span class="hint hint--enter">presiona A, B, C o D</span>
+      </div>
+    </section>
+
+    <!-- ============ PREGUNTA 6 · DATOS ============ -->
+    <section class="screen" data-step="6" aria-labelledby="q6-title" hidden>
+      <h2 class="display display--q" id="q6-title"><span class="c-white">¿A QUIÉN LE ENVÍO</span> <span class="c-malva">EL DIAGNÓSTICO?</span></h2>
+      <div class="fields-grid">
+        <div class="field">
+          <label class="label" for="nombre">Nombre</label>
+          <input class="input" type="text" id="nombre" name="nombre" autocomplete="name" aria-describedby="nombre-error">
+          <p class="error" id="nombre-error" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label class="label" for="empresa">Empresa</label>
+          <input class="input" type="text" id="empresa" name="empresa" autocomplete="organization" aria-describedby="empresa-error">
+          <p class="error" id="empresa-error" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label class="label" for="correo">Correo</label>
+          <input class="input" type="email" inputmode="email" id="correo" name="correo" autocomplete="email" autocapitalize="off" spellcheck="false" aria-describedby="correo-error">
+          <p class="error" id="correo-error" aria-live="polite"></p>
+        </div>
+      </div>
+      <div class="actions actions--submit">
+        <button type="submit" class="btn btn--primary" data-action="submit">Quiero mi diagnóstico</button>
+      </div>
+      <p class="privacy">Uso tus datos solo para enviarte el diagnóstico. No los comparto con nadie.</p>
+      <!-- PENDIENTE: revisión legal (ley chilena de protección de datos): ¿aviso de privacidad / enlace a política? No publicar sin esto. -->
+      <p class="privacy"><span class="pendiente">[PENDIENTE: aviso de privacidad / política según revisión legal]</span></p>
+
+      <div class="send-error" id="send-error" role="alert" hidden>
+        <p>No se pudo enviar. Revisa tu conexión y vuelve a intentarlo.</p>
+        <button type="button" class="btn btn--secondary" data-action="retry">Reintentar</button>
+      </div>
+    </section>
+
+    <!-- ============ CONFIRMACIÓN ============ -->
+    <section class="screen screen--done" data-step="7" aria-labelledby="done-title" hidden>
+      <h2 class="display display--xl" id="done-title" tabindex="-1"><span class="c-white">LISTO,</span> <span class="c-malva">YA LO TENGO.</span></h2>
+      <p class="lead">Te llega a tu correo en 48 horas hábiles. Si por algún motivo tu página no calza con este diagnóstico, te aviso igual y te explico por qué.</p>
+    </section>
+  </form>
+
+  <footer class="progress" id="progress" hidden>
+    <div class="progress__bar" aria-hidden="true"><span class="progress__fill" id="progress-fill"></span></div>
+    <p class="progress__label" id="progress-label" aria-live="polite">1 de 6</p>
+    <div class="progress__nav">
+      <button type="button" class="nav-btn" data-action="prev" aria-label="Pregunta anterior">↑</button>
+      <button type="button" class="nav-btn" data-action="fwd" aria-label="Pregunta siguiente">↓</button>
+    </div>
+  </footer>
+
+  <!-- ============ LIGHTBOX TCC? ============ -->
+  <dialog class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
+    <div class="lightbox__inner">
+      <button type="button" class="lightbox__close" data-action="close-lightbox" aria-label="Cerrar">✕</button>
+      <!-- PENDIENTE: foto de Marco -->
+      <div class="photo photo--lightbox pendiente-box" role="img" aria-label="Foto de Marco Tricot (pendiente)">
+        <span class="pendiente">[PENDIENTE: foto]</span>
+      </div>
+      <!-- PENDIENTE: titular definitivo con Marco (ejemplo del brief) -->
+      <h2 class="display display--lb" id="lightbox-title"><span class="c-white">QUIÉN ESTÁ</span> <span class="c-malva">DETRÁS</span></h2>
+      <p class="pendiente pendiente--block">[PENDIENTE: titular e historia finales; este es el borrador del brief]</p>
+      <div class="lightbox__story">
+        <p>Soy Marco Tricot, redactor senior. Llevo 20 años escribiendo copy, contando historias y midiendo si funcionan.</p>
+        <p>Creé esta plataforma porque veo muchas marcas pagando por clics que su página no convierte. Casi siempre el problema no es el anuncio ni el diseño: es lo que la página dice, o lo que deja de decir.</p>
+        <p>Uso IA para el primer análisis, pero no juega sola este partido: el criterio y la firma son míos.</p>
+        <p>¿Quieres hacer algo más o colaborar? Escríbeme.</p>
+      </div>
+      <div class="lightbox__contact">
+        <a class="mail-link" id="mail-link" href="#">correo</a>
+        <button type="button" class="btn btn--secondary" data-action="copy-email">Copiar correo</button>
+        <span class="copied" id="copied" aria-live="polite"></span>
+      </div>
+      <button type="button" class="btn btn--ghost" data-action="close-lightbox">Cerrar</button>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
