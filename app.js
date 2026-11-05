@@ -9,10 +9,6 @@
   var AUTO_ADVANCE_MS = 450;
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Vista previa de tipografía: ?fuente=anton | big-shoulders | bebas (PENDIENTE: elegir una)
-  var fuente = new URLSearchParams(location.search).get('fuente');
-  if (fuente) document.documentElement.setAttribute('data-fuente', fuente);
-
   var $ = function (sel, ctx) { return (ctx || document).querySelector(sel); };
   var $$ = function (sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); };
 
@@ -156,11 +152,30 @@
     var to = screenAt(step);
     var goingUp = step < state.step;
 
-    from.hidden = true;
-    from.classList.remove('is-active', 'is-entering', 'from-top');
-    to.hidden = false;
-    to.classList.add('is-active');
-    if (!reduceMotion) {
+    window.scrollTo(0, 0);
+
+    // Bienvenida → formulario: desplazamiento horizontal
+    if (state.step === 0 && step === 1 && !reduceMotion) {
+      from.classList.remove('is-active');
+      from.classList.add('is-sliding-out');
+      from.addEventListener('animationend', function done() {
+        from.removeEventListener('animationend', done);
+        from.classList.remove('is-sliding-out');
+        from.hidden = true;
+      });
+      to.hidden = false;
+      to.classList.add('is-active', 'is-sliding-in');
+      to.addEventListener('animationend', function done() {
+        to.removeEventListener('animationend', done);
+        to.classList.remove('is-sliding-in');
+      });
+    } else {
+      from.hidden = true;
+      from.classList.remove('is-active', 'is-entering', 'from-top');
+      to.hidden = false;
+      to.classList.add('is-active');
+    }
+    if (!reduceMotion && !to.classList.contains('is-sliding-in')) {
       to.classList.remove('is-entering', 'from-top');
       void to.offsetWidth; // reinicia la animación
       to.classList.add('is-entering');
@@ -169,7 +184,6 @@
 
     state.step = step;
     if (step <= LAST_Q) state.maxReached = Math.max(state.maxReached, step);
-    window.scrollTo(0, 0);
     updateProgress();
     focusStep(step);
   }

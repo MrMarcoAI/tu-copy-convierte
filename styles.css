@@ -13,8 +13,7 @@
   /* PENDIENTE: acento CTA propuesto, validar con Marco (8,3:1 con texto morado noche) */
   --acento: #F2D94E;
 
-  /* Tipografía display. PENDIENTE: Marco elige entre Anton / Big Shoulders Display / Bebas Neue.
-     Mientras tanto se puede probar con ?fuente=anton | big-shoulders | bebas  (ver tipografias.html) */
+  /* Tipografía display: Anton (elegida por Marco) */
   --font-display: 'Anton', 'Impact', sans-serif;
   --display-scale: 1;
   --display-weight: 400;
@@ -23,16 +22,6 @@
   --gutter: clamp(16px, 5vw, 72px);
   --maxw: 1200px;
   --ease: cubic-bezier(.2, .7, .2, 1);
-}
-
-html[data-fuente="big-shoulders"] {
-  --font-display: 'Big Shoulders Display', 'Impact', sans-serif;
-  --display-weight: 900;
-  --display-scale: 1;
-}
-html[data-fuente="bebas"] {
-  --font-display: 'Bebas Neue', 'Impact', sans-serif;
-  --display-scale: 1.22;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -64,6 +53,8 @@ body.is-locked { overflow: hidden; }
 .c-white { color: var(--blanco); }
 .c-malva { color: var(--malva-display); }
 .c-lila { color: var(--lila-polvo); }
+.c-azul { color: var(--azul-clic); }   /* solo display */
+.c-amarillo { color: var(--acento); } /* solo display */
 
 /* Foco visible en todo (azul clic) */
 :focus-visible {
@@ -121,38 +112,25 @@ body.is-locked { overflow: hidden; }
   flex: none;
   display: grid;
   place-items: center;
-  width: 72px;
-  height: 64px;
+  width: 76px;
+  height: 76px;
   padding: 0;
-  border: 0;
   cursor: pointer;
-  color: var(--blanco);
-  background: var(--malva);
-  /* forma propia: ficha con esquina recortada (como un ticket) */
-  clip-path: polygon(0 0, 100% 0, 100% 72%, 76% 100%, 0 100%);
-  border-radius: 6px 6px 0 6px;
-  transform: rotate(-6deg);
-  transition: transform .2s var(--ease), background-color .2s;
+  color: var(--acento);
+  background: transparent;
+  border: 5px solid var(--acento);
+  border-radius: 50%;
+  transition: transform .2s var(--ease), background-color .2s, color .2s;
   font-family: var(--font-display);
   font-weight: var(--display-weight);
-  font-size: calc(26px * var(--display-scale));
+  font-size: 23px;
   line-height: 1;
   letter-spacing: 0.02em;
 }
-.badge:hover { transform: rotate(0deg) scale(1.06); background: #B474B1; }
-.badge:active { transform: rotate(0deg) scale(.97); }
-.badge:focus-visible { outline-offset: 6px; }
-.badge__cursor {
-  position: absolute;
-  right: 3px;
-  bottom: 1px;
-  width: 17px;
-  height: 17px;
-  fill: var(--azul-clic);
-  stroke: var(--morado-noche);
-  stroke-width: 1.4;
-  stroke-linejoin: round;
-}
+.badge__text { transform: translateY(1px); }
+.badge:hover { background: var(--acento); color: var(--morado-noche); transform: rotate(-8deg) scale(1.05); }
+.badge:active { transform: scale(.96); }
+.badge:focus-visible { outline-offset: 5px; }
 /* Tooltip */
 .badge::after {
   content: attr(data-tooltip);
@@ -170,24 +148,25 @@ body.is-locked { overflow: hidden; }
   border-radius: 6px;
   opacity: 0;
   pointer-events: none;
-  transform: translateY(-4px) rotate(6deg);
+  transform: translateY(-4px);
   transition: opacity .15s, transform .15s;
 }
 .badge:hover::after,
-.badge:focus-visible::after { opacity: 1; transform: translateY(0) rotate(6deg); }
+.badge:focus-visible::after { opacity: 1; transform: translateY(0); }
 .badge { overflow: visible; }
 
 /* Un solo giro sutil al cargar la bienvenida */
 .badge.is-intro { animation: badge-intro 1s var(--ease) .6s 1 both; }
 @keyframes badge-intro {
-  0% { transform: rotate(-6deg); }
-  35% { transform: rotate(8deg) scale(1.08); }
+  0% { transform: rotate(0); }
+  35% { transform: rotate(14deg) scale(1.08); }
   70% { transform: rotate(-10deg); }
-  100% { transform: rotate(-6deg); }
+  100% { transform: rotate(0); }
 }
 
 /* ---------- Pantallas ---------- */
 #form { margin: 0; }
+
 
 .screen {
   max-width: var(--maxw);
@@ -196,10 +175,14 @@ body.is-locked { overflow: hidden; }
   min-height: calc(100dvh - 92px);
   container-type: inline-size;
 }
-.welcome__main { container-type: inline-size; min-width: 0; }
 .screen[hidden] { display: none; }
 .screen.is-entering { animation: screen-in .35s var(--ease) both; }
 .screen.is-entering.from-top { animation-name: screen-in-down; }
+#form { position: relative; overflow-x: clip; }
+.screen.is-sliding-in { animation: slide-in .55s var(--ease) both; }
+.screen.is-sliding-out { position: absolute; top: 0; left: 0; right: 0; animation: slide-out .55s var(--ease) both; }
+@keyframes slide-in { from { transform: translateX(100vw); } to { transform: none; } }
+@keyframes slide-out { from { transform: none; } to { transform: translateX(-100vw); } }
 @keyframes screen-in { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
 @keyframes screen-in-down { from { opacity: 0; transform: translateY(-28px); } to { opacity: 1; transform: none; } }
 
@@ -213,7 +196,7 @@ body.is-locked { overflow: hidden; }
   hyphens: none;
 }
 /* tamaño relativo al ancho de su columna: "¿CONVIERTE?" nunca se corta */
-.display--xl { font-size: calc(clamp(44px, 19.5cqi, 190px) * var(--display-scale)); }
+.display--xl { font-size: clamp(44px, min(17cqi, 20vh), 200px); }
 .display--q  { font-size: calc(clamp(40px, 8vw, 104px) * var(--display-scale)); max-width: 14ch; }
 .display--lb { font-size: calc(clamp(44px, 7vw, 72px) * var(--display-scale)); margin-bottom: .5rem; }
 
@@ -236,8 +219,12 @@ body.is-locked { overflow: hidden; }
 }
 .secondary strong { font-weight: 700; }
 
-/* Bienvenida */
-.welcome {
+/* Bienvenida: título, bajada y botón en el primer pantallazo; detalle debajo */
+.screen--welcome { padding-top: clamp(16px, 4vh, 56px); }
+.hero { margin-bottom: clamp(48px, 10vh, 120px); }
+.hero .lead { margin-bottom: 0; }
+.hero .actions { margin-top: 1.25rem; }
+.welcome-details {
   display: grid;
   gap: 2rem;
   grid-template-columns: 1fr;
@@ -263,8 +250,7 @@ body.is-locked { overflow: hidden; }
 .photo--lightbox { width: 120px; height: 120px; border-radius: 50%; margin-bottom: 1rem; padding: .5rem; }
 
 @media (min-width: 900px) {
-  .welcome { grid-template-columns: minmax(0, 1fr) 300px; align-items: start; }
-  .photo--welcome { margin-top: 1rem; }
+  .welcome-details { grid-template-columns: minmax(0, 1fr) 280px; align-items: start; }
 }
 
 /* ---------- Campos ---------- */
@@ -503,7 +489,7 @@ body.is-locked { overflow: hidden; }
     box-shadow: none;
   }
   .lightbox__inner { padding: max(24px, env(safe-area-inset-top)) 16px 32px; }
-  .badge { width: 60px; height: 54px; font-size: calc(22px * var(--display-scale)); }
+  .badge { width: 60px; height: 60px; border-width: 4px; font-size: 18px; }
   .hint--enter { display: none; } /* en mobile no se depende de Enter */
 }
 

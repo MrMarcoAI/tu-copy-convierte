@@ -9,8 +9,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- PENDIENTE: cuando Marco elija la tipografía display, dejar solo esa familia en este link -->
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Big+Shoulders+Display:wght@900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="config.js"></script>
 </head>
@@ -22,7 +21,6 @@
     <!-- PENDIENTE: decidir con Marco "TCC?" o "¿TCC?" (también en favicon.svg) -->
     <button type="button" class="badge" id="badge" aria-label="Quién está detrás de Tu copy, ¿convierte?" data-tooltip="¿Quién está detrás?" aria-haspopup="dialog">
       <span class="badge__text" aria-hidden="true">TCC?</span>
-      <svg class="badge__cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2 L4 19 L8.6 14.6 L11.6 21.4 L14.6 20.1 L11.7 13.4 L18 13.4 Z"/></svg>
     </button>
   </header>
 
@@ -35,15 +33,22 @@
 
     <!-- ============ PANTALLA 0: BIENVENIDA ============ -->
     <section class="screen screen--welcome is-active" data-step="0" aria-labelledby="welcome-title">
-      <div class="welcome">
-        <div class="welcome__main">
-          <h1 class="display display--xl" id="welcome-title">
-            <span class="c-white">TU COPY,</span><br>
-            <span class="c-malva">¿CONVIERTE?</span>
-          </h1>
+      <div class="hero">
+        <h1 class="display display--xl" id="welcome-title">
+          <span class="c-white">TU</span> <span class="c-azul">COPY,</span><br>
+          <span class="c-malva">¿CONVIERTE?</span>
+        </h1>
 
-          <p class="lead">Déjame tu página y el anuncio que lleva a ella. En 48 horas hábiles te digo qué está funcionando, qué te está costando clientes y por dónde partir.</p>
+        <p class="lead">Déjame tu página y el anuncio que lleva a ella. En 48 horas hábiles te digo qué está funcionando, qué te está costando clientes y por dónde partir.</p>
 
+        <div class="actions">
+          <button type="button" class="btn btn--primary" data-action="start">Empezar</button>
+          <span class="hint hint--enter">presiona Enter ↵</span>
+        </div>
+      </div>
+
+      <div class="welcome-details">
+        <div class="welcome-details__text">
           <div class="receive">
             <p class="receive__title">Qué recibes (gratis):</p>
             <ul class="receive__list">
@@ -59,11 +64,6 @@
           <p class="secondary signature">Uso IA para el primer análisis, pero no juega sola este partido: cada diagnóstico pasa por mi criterio y lo firmo yo. Marco Tricot, redactor senior con 20 años en copy, storytelling y performance.</p>
 
           <p class="secondary quota">Reviso <span class="pendiente">[PENDIENTE: X]</span> diagnósticos por semana.</p>
-
-          <div class="actions">
-            <button type="button" class="btn btn--primary" data-action="start">Empezar</button>
-            <span class="hint hint--enter">presiona Enter ↵</span>
-          </div>
         </div>
 
         <!-- PENDIENTE: foto de Marco (reemplazar este bloque por <img src="..." alt="Marco Tricot">) -->
@@ -75,7 +75,7 @@
 
     <!-- ============ PREGUNTA 1 · URL ============ -->
     <section class="screen" data-step="1" aria-labelledby="q1-title" hidden>
-      <h2 class="display display--q" id="q1-title"><span class="c-white">¿QUÉ PÁGINA QUIERES</span> <span class="c-malva">QUE REVISE?</span></h2>
+      <h2 class="display display--q" id="q1-title"><span class="c-white">¿QUÉ</span> <span class="c-amarillo">PÁGINA</span> <span class="c-white">QUIERES</span> <span class="c-azul">QUE</span> <span class="c-malva">REVISE?</span></h2>
       <p class="help" id="q1-help">La página donde llega la gente desde tus anuncios. Si no tienes una específica, tu home.</p>
       <div class="field">
         <label class="sr-only" for="url_pagina">¿Qué página quieres que revise?</label>
@@ -90,7 +90,7 @@
 
     <!-- ============ PREGUNTA 2 · ANUNCIO ============ -->
     <section class="screen" data-step="2" aria-labelledby="q2-title" hidden>
-      <h2 class="display display--q" id="q2-title"><span class="c-white">¿QUÉ ANUNCIO LLEVA</span> <span class="c-malva">GENTE A ESA PÁGINA?</span></h2>
+      <h2 class="display display--q" id="q2-title"><span class="c-white">¿QUÉ</span> <span class="c-azul">ANUNCIO</span> <span class="c-white">LLEVA</span> <span class="c-malva">GENTE</span> <span class="c-lila">A ESA</span> <span class="c-amarillo">PÁGINA?</span></h2>
       <p class="help" id="q2-help">Pega el link del anuncio (por ejemplo, desde la biblioteca de anuncios de Meta) o cuéntame en pocas palabras qué dice. Así reviso si la página cumple lo que promete el anuncio.</p>
       <div class="field">
         <label class="label" for="anuncio_link">Link del anuncio (opcional)</label>
@@ -109,7 +109,7 @@
 
     <!-- ============ PREGUNTA 3 · OBJETIVO ============ -->
     <section class="screen" data-step="3" aria-labelledby="q3-title" hidden>
-      <h2 class="display display--q" id="q3-title"><span class="c-white">¿QUÉ QUIERES QUE HAGA</span> <span class="c-malva">LA GENTE</span> <span class="c-white">EN ESA PÁGINA?</span></h2>
+      <h2 class="display display--q" id="q3-title"><span class="c-white">¿QUÉ QUIERES</span> <span class="c-azul">QUE HAGA</span> <span class="c-malva">LA GENTE</span> <span class="c-white">EN ESA</span> <span class="c-amarillo">PÁGINA?</span></h2>
       <div class="options" role="radiogroup" aria-labelledby="q3-title" aria-describedby="q3-error" data-name="objetivo">
         <button type="button" class="option" role="radio" aria-checked="false" data-key="A" data-value="Dejar sus datos"><span class="option__key" aria-hidden="true">A</span>Dejar sus datos</button>
         <button type="button" class="option" role="radio" aria-checked="false" data-key="B" data-value="Comprar"><span class="option__key" aria-hidden="true">B</span>Comprar</button>
@@ -130,7 +130,7 @@
 
     <!-- ============ PREGUNTA 4 · PÚBLICO ============ -->
     <section class="screen" data-step="4" aria-labelledby="q4-title" hidden>
-      <h2 class="display display--q" id="q4-title"><span class="c-white">¿A QUIÉN LE HABLA</span> <span class="c-malva">TU PÁGINA?</span></h2>
+      <h2 class="display display--q" id="q4-title"><span class="c-white">¿A</span> <span class="c-amarillo">QUIÉN</span> <span class="c-white">LE</span> <span class="c-azul">HABLA</span> <span class="c-malva">TU PÁGINA?</span></h2>
       <div class="field">
         <label class="sr-only" for="publico">¿A quién le habla tu página?</label>
         <input class="input" type="text" id="publico" name="publico" maxlength="140" placeholder="Ej.: dueñas de clínicas veterinarias en regiones" aria-describedby="q4-count q4-error">
@@ -145,7 +145,7 @@
 
     <!-- ============ PREGUNTA 5 · INVERSIÓN (filtro) ============ -->
     <section class="screen" data-step="5" aria-labelledby="q5-title" hidden>
-      <h2 class="display display--q" id="q5-title"><span class="c-white">¿HOY INVIERTES EN</span> <span class="c-malva">PUBLICIDAD DIGITAL?</span></h2>
+      <h2 class="display display--q" id="q5-title"><span class="c-white">¿HOY</span> <span class="c-azul">INVIERTES</span> <span class="c-white">EN</span> <span class="c-malva">PUBLICIDAD</span> <span class="c-amarillo">DIGITAL?</span></h2>
       <div class="options" role="radiogroup" aria-labelledby="q5-title" aria-describedby="q5-error" data-name="inversion_pauta">
         <button type="button" class="option" role="radio" aria-checked="false" data-key="A" data-value="Sí, en Meta"><span class="option__key" aria-hidden="true">A</span>Sí, en Meta</button>
         <button type="button" class="option" role="radio" aria-checked="false" data-key="B" data-value="Sí, en Google"><span class="option__key" aria-hidden="true">B</span>Sí, en Google</button>
@@ -161,7 +161,7 @@
 
     <!-- ============ PREGUNTA 6 · DATOS ============ -->
     <section class="screen" data-step="6" aria-labelledby="q6-title" hidden>
-      <h2 class="display display--q" id="q6-title"><span class="c-white">¿A QUIÉN LE ENVÍO</span> <span class="c-malva">EL DIAGNÓSTICO?</span></h2>
+      <h2 class="display display--q" id="q6-title"><span class="c-white">¿A QUIÉN</span> <span class="c-azul">LE ENVÍO</span> <span class="c-malva">EL</span> <span class="c-amarillo">DIAGNÓSTICO?</span></h2>
       <div class="fields-grid">
         <div class="field">
           <label class="label" for="nombre">Nombre</label>
@@ -194,7 +194,7 @@
 
     <!-- ============ CONFIRMACIÓN ============ -->
     <section class="screen screen--done" data-step="7" aria-labelledby="done-title" hidden>
-      <h2 class="display display--xl" id="done-title" tabindex="-1"><span class="c-white">LISTO,</span> <span class="c-malva">YA LO TENGO.</span></h2>
+      <h2 class="display display--xl" id="done-title" tabindex="-1"><span class="c-amarillo">LISTO,</span> <span class="c-white">YA</span> <span class="c-azul">LO</span> <span class="c-malva">TENGO.</span></h2>
       <p class="lead">Te llega a tu correo en 48 horas hábiles. Si por algún motivo tu página no calza con este diagnóstico, te aviso igual y te explico por qué.</p>
     </section>
   </form>
@@ -217,7 +217,7 @@
         <span class="pendiente">[PENDIENTE: foto]</span>
       </div>
       <!-- PENDIENTE: titular definitivo con Marco (ejemplo del brief) -->
-      <h2 class="display display--lb" id="lightbox-title"><span class="c-white">QUIÉN ESTÁ</span> <span class="c-malva">DETRÁS</span></h2>
+      <h2 class="display display--lb" id="lightbox-title"><span class="c-white">QUIÉN</span> <span class="c-azul">ESTÁ</span> <span class="c-amarillo">DETRÁS</span></h2>
       <p class="pendiente pendiente--block">[PENDIENTE: titular e historia finales; este es el borrador del brief]</p>
       <div class="lightbox__story">
         <p>Soy Marco Tricot, redactor senior. Llevo 20 años escribiendo copy, contando historias y midiendo si funcionan.</p>

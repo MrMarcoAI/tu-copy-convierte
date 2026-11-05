@@ -10,7 +10,6 @@ styles.css          estilos
 app.js              navegación, validaciones, envío
 config.js           SHEETS_ENDPOINT y correo de contacto
 favicon.svg         insignia TCC?
-tipografias.html    comparación Anton / Big Shoulders Display / Bebas Neue
 apps-script/        Code.gs + guía paso a paso (GUIA.md)
 ```
 
@@ -30,7 +29,7 @@ No necesita instalación. Desde la carpeta del proyecto:
 python3 -m http.server 8000
 ```
 
-Abre <http://localhost:8000>. Comparación de tipografías: <http://localhost:8000/tipografias.html>. Para ver el formulario con otra fuente: `?fuente=anton`, `?fuente=big-shoulders` o `?fuente=bebas`.
+Abre <http://localhost:8000>.
 
 Con `SHEETS_ENDPOINT` vacío y en `localhost`, el envío se **simula**: muestra la confirmación y deja el JSON en la consola del navegador. Fuera de localhost, sin endpoint, muestra el error de envío.
 
