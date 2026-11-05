@@ -15,10 +15,6 @@
 </head>
 <body>
   <header class="topbar">
-    <p class="brand" aria-label="Tu copy, ¿convierte?">
-      <span class="c-white">TU COPY,</span> <span class="c-lila">¿CONVIERTE?</span>
-    </p>
-    <!-- PENDIENTE: decidir con Marco "TCC?" o "¿TCC?" (también en favicon.svg) -->
     <button type="button" class="badge" id="badge" aria-label="Quién está detrás de Tu copy, ¿convierte?" data-tooltip="¿Quién está detrás?" aria-haspopup="dialog">
       <span class="badge__text" aria-hidden="true">TCC?</span>
     </button>
@@ -43,34 +39,10 @@
 
         <div class="actions">
           <button type="button" class="btn btn--primary" data-action="start">Empezar</button>
-          <span class="hint hint--enter">presiona Enter ↵</span>
+          <button type="button" class="btn btn--secondary" data-action="open-info" aria-haspopup="dialog">¿Qué obtienes?</button>
         </div>
       </div>
 
-      <div class="welcome-details">
-        <div class="welcome-details__text">
-          <div class="receive">
-            <p class="receive__title">Qué recibes (gratis):</p>
-            <ul class="receive__list">
-              <li>Las 3 fortalezas de tu página</li>
-              <li>Los 3 problemas que más te están frenando, ordenados por impacto</li>
-              <li>Si tu página cumple lo que promete tu anuncio</li>
-              <li>Un ejemplo de reescritura</li>
-            </ul>
-          </div>
-
-          <p class="secondary"><strong>Qué no incluye:</strong> la reescritura completa. El diagnóstico te muestra el problema; resolverlo es otra conversación.</p>
-
-          <p class="secondary signature">Uso IA para el primer análisis, pero no juega sola este partido: cada diagnóstico pasa por mi criterio y lo firmo yo. Marco Tricot, redactor senior con 20 años en copy, storytelling y performance.</p>
-
-          <p class="secondary quota">Reviso <span class="pendiente">[PENDIENTE: X]</span> diagnósticos por semana.</p>
-        </div>
-
-        <!-- PENDIENTE: foto de Marco (reemplazar este bloque por <img src="..." alt="Marco Tricot">) -->
-        <div class="photo photo--welcome pendiente-box" role="img" aria-label="Foto de Marco Tricot (pendiente)">
-          <span class="pendiente">[PENDIENTE: foto de Marco]</span>
-        </div>
-      </div>
     </section>
 
     <!-- ============ PREGUNTA 1 · URL ============ -->
@@ -212,10 +184,6 @@
   <dialog class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
     <div class="lightbox__inner">
       <button type="button" class="lightbox__close" data-action="close-lightbox" aria-label="Cerrar">✕</button>
-      <!-- PENDIENTE: foto de Marco -->
-      <div class="photo photo--lightbox pendiente-box" role="img" aria-label="Foto de Marco Tricot (pendiente)">
-        <span class="pendiente">[PENDIENTE: foto]</span>
-      </div>
       <!-- PENDIENTE: titular definitivo con Marco (ejemplo del brief) -->
       <h2 class="display display--lb" id="lightbox-title"><span class="c-white">QUIÉN</span> <span class="c-azul">ESTÁ</span> <span class="c-amarillo">DETRÁS</span></h2>
       <p class="pendiente pendiente--block">[PENDIENTE: titular e historia finales; este es el borrador del brief]</p>
@@ -231,6 +199,35 @@
         <span class="copied" id="copied" aria-live="polite"></span>
       </div>
       <button type="button" class="btn btn--ghost" data-action="close-lightbox">Cerrar</button>
+    </div>
+  </dialog>
+
+  <!-- ============ LIGHTBOX ¿QUÉ OBTIENES? ============ -->
+  <dialog class="lightbox lightbox--info" id="info" role="dialog" aria-modal="true" aria-labelledby="info-title">
+    <div class="lightbox__inner">
+      <button type="button" class="lightbox__close" data-action="close-lightbox" aria-label="Cerrar">✕</button>
+      <h2 class="display display--lb" id="info-title"><span class="c-white">¿QUÉ</span> <span class="c-amarillo">OBTIENES?</span></h2>
+
+      <div class="receive">
+        <p class="receive__title">Qué recibes (gratis):</p>
+        <ul class="receive__list">
+          <li>Las 3 fortalezas de tu página</li>
+          <li>Los 3 problemas que más te están frenando, ordenados por impacto</li>
+          <li>Si tu página cumple lo que promete tu anuncio</li>
+          <li>Un ejemplo de reescritura</li>
+        </ul>
+      </div>
+
+      <p class="secondary"><strong>Qué no incluye:</strong> la reescritura completa. El diagnóstico te muestra el problema; resolverlo es otra conversación.</p>
+
+      <p class="secondary signature">Uso IA para el primer análisis, pero no juega sola este partido: cada diagnóstico pasa por mi criterio y lo firmo yo. Marco Tricot, redactor senior con 20 años en copy, storytelling y performance.</p>
+
+      <p class="secondary quota">Reviso <span class="pendiente">[PENDIENTE: X]</span> diagnósticos por semana.</p>
+
+      <div class="actions">
+        <button type="button" class="btn btn--primary" data-action="start-from-info">Empezar</button>
+        <button type="button" class="btn btn--ghost" data-action="close-lightbox">Cerrar</button>
+      </div>
     </div>
   </dialog>
 

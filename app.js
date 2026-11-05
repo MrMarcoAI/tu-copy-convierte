@@ -21,6 +21,7 @@
   var btnFwd = $('[data-action="fwd"]');
   var badge = $('#badge');
   var lightbox = $('#lightbox');
+  var infoBox = $('#info');
 
   var state = {
     step: 0,
@@ -145,47 +146,54 @@
     if (target) target.focus({ preventScroll: true });
   }
 
-  function goTo(step, opts) {
-    opts = opts || {};
+  // Transiciones: entre bienvenida y P1, deslizamiento horizontal;
+  // entre preguntas, la anterior se desvanece y la nueva entra en cascada.
+  var ANIM_CLASSES = ['is-leaving', 'anim-in-right', 'anim-in-left', 'anim-out-left', 'anim-out-right',
+                      'anim-in-up', 'anim-in-down', 'anim-out-up', 'anim-out-down'];
+  var CLEANUP_MS = 1600;
+
+  function clearAnim(el) {
+    clearTimeout(el._animTimer);
+    ANIM_CLASSES.forEach(function (c) { el.classList.remove(c); });
+  }
+
+  function goTo(step) {
     if (step < 0 || step > DONE || step === state.step) return;
     var from = screenAt(state.step);
     var to = screenAt(step);
-    var goingUp = step < state.step;
+    var dir = step > state.step ? 1 : -1;
+    var horizontal = (state.step === 0 && step === 1) || (state.step === 1 && step === 0);
 
+    screens.forEach(function (s) {
+      if (s !== from && s !== to) { clearAnim(s); s.hidden = true; s.classList.remove('is-active'); }
+    });
+    clearAnim(from);
+    clearAnim(to);
     window.scrollTo(0, 0);
 
-    // Bienvenida → formulario: desplazamiento horizontal
-    if (state.step === 0 && step === 1 && !reduceMotion) {
-      from.classList.remove('is-active');
-      from.classList.add('is-sliding-out');
-      from.addEventListener('animationend', function done() {
-        from.removeEventListener('animationend', done);
-        from.classList.remove('is-sliding-out');
-        from.hidden = true;
-      });
-      to.hidden = false;
-      to.classList.add('is-active', 'is-sliding-in');
-      to.addEventListener('animationend', function done() {
-        to.removeEventListener('animationend', done);
-        to.classList.remove('is-sliding-in');
-      });
-    } else {
-      from.hidden = true;
-      from.classList.remove('is-active', 'is-entering', 'from-top');
-      to.hidden = false;
-      to.classList.add('is-active');
-    }
-    if (!reduceMotion && !to.classList.contains('is-sliding-in')) {
-      to.classList.remove('is-entering', 'from-top');
-      void to.offsetWidth; // reinicia la animación
-      to.classList.add('is-entering');
-      if (goingUp) to.classList.add('from-top');
-    }
+    from.classList.remove('is-active');
+    to.hidden = false;
+    to.classList.add('is-active');
 
     state.step = step;
     if (step <= LAST_Q) state.maxReached = Math.max(state.maxReached, step);
     updateProgress();
+
+    if (reduceMotion) {
+      from.hidden = true;
+      focusStep(step);
+      return;
+    }
+
+    void to.offsetWidth; // reinicia animaciones
+    from.classList.add('is-leaving', horizontal ? (dir > 0 ? 'anim-out-left' : 'anim-out-right')
+                                                : (dir > 0 ? 'anim-out-up' : 'anim-out-down'));
+    to.classList.add(horizontal ? (dir > 0 ? 'anim-in-right' : 'anim-in-left')
+                                : (dir > 0 ? 'anim-in-up' : 'anim-in-down'));
     focusStep(step);
+
+    from._animTimer = setTimeout(function () { clearAnim(from); from.hidden = true; }, CLEANUP_MS);
+    to._animTimer = setTimeout(function () { clearAnim(to); }, CLEANUP_MS);
   }
 
   function next() {
@@ -198,7 +206,7 @@
   }
 
   function prev() {
-    if (state.step > 1 && state.step <= LAST_Q) goTo(state.step - 1);
+    if (state.step >= 1 && state.step <= LAST_Q) goTo(state.step - 1);
   }
 
   function updateProgress() {
@@ -208,7 +216,7 @@
     if (!visible) return;
     progressFill.style.width = (q / TOTAL * 100) + '%';
     progressLabel.textContent = q + ' de ' + TOTAL;
-    btnPrev.disabled = q <= 1;
+    btnPrev.disabled = false; // en P1, ↑ vuelve a la bienvenida
     btnFwd.disabled = q >= state.maxReached || q >= LAST_Q;
   }
 
@@ -230,7 +238,7 @@
       if (isOther) { $('input', otherField).focus(); return; }
     }
 
-    if (!reduceMotion) { btn.classList.remove('is-blink'); void btn.offsetWidth; btn.classList.add('is-blink'); }
+    if (!reduceMotion) { btn.classList.remove('is-pop'); void btn.offsetWidth; btn.classList.add('is-pop'); }
     if (auto) {
       clearTimeout(autoTimer);
       var stepAtClick = state.step;
@@ -257,7 +265,7 @@
 
   // ---------- Teclado global ----------
   document.addEventListener('keydown', function (e) {
-    if (lightbox.open) return;
+    if (document.querySelector('dialog[open]')) return;
     if (e.isComposing || e.altKey || e.ctrlKey || e.metaKey) return;
     var t = e.target;
     var inText = t.matches && t.matches('input, textarea');
@@ -294,7 +302,9 @@
         }
         break;
       case 'retry': submit(); break;
-      case 'close-lightbox': closeLightbox(); break;
+      case 'close-lightbox': closeDialog(el.closest('dialog')); break;
+      case 'open-info': openDialog(infoBox, el); break;
+      case 'start-from-info': closeDialog(infoBox, function () { goTo(1); }); break;
       case 'copy-email': copyEmail(); break;
     }
   });
@@ -388,40 +398,50 @@
   mailLink.textContent = email;
   mailLink.href = 'mailto:' + email;
 
-  function openLightbox() {
+  // Dos lightbox: "TCC?" (quién está detrás) y "¿Qué obtienes?"
+  function openDialog(dlg, opener) {
     clearTimeout(autoTimer);
-    if (typeof lightbox.showModal === 'function') lightbox.showModal();
-    else lightbox.setAttribute('open', '');
+    dlg._opener = opener;
+    dlg.classList.remove('is-closing');
+    if (typeof dlg.showModal === 'function') dlg.showModal();
+    else dlg.setAttribute('open', '');
     document.body.classList.add('is-locked');
-    $('.lightbox__close', lightbox).focus();
+    $('.lightbox__close', dlg).focus();
   }
 
-  function closeLightbox() {
-    if (typeof lightbox.close === 'function' && lightbox.open) lightbox.close();
-    else lightbox.removeAttribute('open');
+  // Cierre con animación (salvo prefers-reduced-motion)
+  function closeDialog(dlg, after) {
+    if (!dlg || !dlg.open || dlg.classList.contains('is-closing')) return;
+    dlg._after = after;
+    if (reduceMotion) { dlg.close(); return; }
+    dlg.classList.add('is-closing');
+    setTimeout(function () { dlg.close(); }, 280);
   }
 
-  lightbox.addEventListener('close', function () {
-    document.body.classList.remove('is-locked');
-    $('#copied').textContent = '';
-    badge.focus();
+  [lightbox, infoBox].forEach(function (dlg) {
+    dlg.addEventListener('close', function () {
+      dlg.classList.remove('is-closing');
+      document.body.classList.remove('is-locked');
+      $('#copied').textContent = '';
+      var after = dlg._after; dlg._after = null;
+      if (after) after();
+      else if (dlg._opener) dlg._opener.focus();
+    });
+    // Esc: cerrar con la misma animación
+    dlg.addEventListener('cancel', function (e) { e.preventDefault(); closeDialog(dlg); });
+    // Clic fuera del contenido (sobre el fondo) cierra
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) closeDialog(dlg); });
+    // Foco atrapado (refuerzo sobre el comportamiento nativo de <dialog>)
+    dlg.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab') return;
+      var f = $$('a[href], button:not([disabled]), input, textarea', dlg);
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
   });
 
-  // Clic fuera del contenido (sobre el fondo) cierra
-  lightbox.addEventListener('click', function (e) {
-    if (e.target === lightbox) closeLightbox();
-  });
-
-  // Foco atrapado (refuerzo sobre el comportamiento nativo de <dialog>)
-  lightbox.addEventListener('keydown', function (e) {
-    if (e.key !== 'Tab') return;
-    var f = $$('a[href], button:not([disabled]), input, textarea', lightbox);
-    var first = f[0], last = f[f.length - 1];
-    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-  });
-
-  badge.addEventListener('click', openLightbox);
+  badge.addEventListener('click', function () { openDialog(lightbox, badge); });
 
   function copyEmail() {
     var out = $('#copied');
