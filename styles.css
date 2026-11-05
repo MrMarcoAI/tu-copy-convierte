@@ -88,7 +88,7 @@ body.is-locked { overflow: hidden; }
   align-items: center;
   justify-content: flex-end;
   gap: 1rem;
-  padding: max(14px, env(safe-area-inset-top)) var(--gutter) 14px;
+  padding: max(40px, env(safe-area-inset-top)) 40px 14px var(--gutter); /* insignia separada de la esquina */
   background: var(--morado-noche);
 }
 
@@ -97,8 +97,8 @@ body.is-locked { overflow: hidden; }
   flex: none;
   display: grid;
   place-items: center;
-  width: 76px;
-  height: 76px;
+  width: 84px;
+  height: 84px;
   padding: 0;
   cursor: pointer;
   color: var(--acento);
@@ -112,14 +112,19 @@ body.is-locked { overflow: hidden; }
   line-height: 1;
   letter-spacing: 0.02em;
 }
-.badge__text {
-  display: block;
-  transform: translateY(1px);
-  /* gira constantemente; se detiene al pasar el mouse o con foco */
+.badge__face {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .06em;
+  transform: translateY(.18em);
+  /* carita (TCC? + sonrisa): gira constantemente; se detiene al pasar el mouse o con foco */
   animation: badge-spin 9s linear infinite;
 }
-.badge:hover .badge__text,
-.badge:focus-visible .badge__text { animation-play-state: paused; }
+.badge__text { display: block; }
+.badge__smile { display: block; width: 1.25em; height: .5em; }
+.badge:hover .badge__face,
+.badge:focus-visible .badge__face { animation-play-state: paused; }
 @keyframes badge-spin { to { rotate: 360deg; } }
 .badge:hover { background: var(--acento); color: var(--morado-noche); transform: scale(1.1); }
 .badge:active { transform: scale(.96); }
@@ -513,7 +518,8 @@ body.is-locked { overflow: hidden; }
   .lightbox.is-closing { animation: sheet-out .3s var(--ease-in) both; }
   .lightbox__inner { padding: 64px 16px max(32px, env(safe-area-inset-bottom)); }
   .lightbox__close { top: 12px; right: 12px; }
-  .badge { width: 60px; height: 60px; border-width: 4px; font-size: 18px; }
+  .topbar { padding-top: max(24px, env(safe-area-inset-top)); padding-right: 24px; }
+  .badge { width: 66px; height: 66px; border-width: 4px; font-size: 18px; }
   .hint--enter { display: none; } /* en mobile no se depende de Enter */
 }
 
